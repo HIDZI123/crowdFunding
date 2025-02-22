@@ -1,5 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile"
+import CreateCampaign from "./pages/CreateCampaign";
+import CampaignDetails from "./pages/CampaignDetails";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 
@@ -15,6 +18,10 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/create-campaign" element={<CreateCampaign />} />
+          <Route path="/campaign-details/:id" element={<CampaignDetails />} />
+
         </Routes>
       </div>
     </div>
