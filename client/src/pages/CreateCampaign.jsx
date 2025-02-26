@@ -5,11 +5,13 @@ import { ethers } from "ethers";
 import { money } from "../assets";
 import CustomButton from "../components/CustomButton";
 import { checkIfImage } from "../utils";
+import { useStateContext } from "../context";
 import FormField from "../components/FormField";
 
 const CreateCampaign = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { createCampaign } = useStateContext();
   const [form, setForm] = useState({
     title: "",
     name: "",
@@ -26,9 +28,25 @@ const CreateCampaign = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted", form);
+  
+    checkIfImage(form.image, async (exists) => {
+      if (exists) {
+        setLoading(true);
+        await createCampaign({
+          ...form,
+          target: ethers.utils.parseUnits(form.target, 18),
+        });
+        setLoading(false);
+        navigate("/");
+      } else {
+        alert("Provide a valid Image Url");
+        setForm({ ...form, image: "" });
+      }
+    });
+  
+   // console.log("Form Submitted", form);
   };
 
   return (

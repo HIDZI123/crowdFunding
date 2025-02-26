@@ -2,14 +2,22 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import { ThirdwebProvider } from "thirdweb/react";
+import { ThirdwebProvider, metamaskWallet } from "@thirdweb-dev/react";
+import { StateContextProvider } from "./context";
+import {Sepolia} from "@thirdweb-dev/chains"
 import "./index.css";
+
+const metamaskConfig = metamaskWallet({
+  recommended: true
+});
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThirdwebProvider>
+    <ThirdwebProvider  activeChain={Sepolia}>
       <Router>
-        <App />
+        <StateContextProvider>
+          <App />
+        </StateContextProvider>
       </Router>
     </ThirdwebProvider>
   </React.StrictMode>
