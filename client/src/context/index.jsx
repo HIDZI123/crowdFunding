@@ -4,7 +4,7 @@ import {
   useContract,
   useContractWrite,
   useConnect,
-  metamaskWallet
+  metamaskWallet,
 } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 
@@ -25,7 +25,6 @@ export const StateContextProvider = ({ children }) => {
 
   const connect = async () => {
     try {
-      // Create a metamask wallet config and pass it to the connect function
       const metamaskConfig = metamaskWallet();
       await connectWithMetamask(metamaskConfig);
     } catch (error) {
@@ -52,6 +51,33 @@ export const StateContextProvider = ({ children }) => {
     }
   };
 
+  const getCampaigns = async () => {
+    const campaigns = await contract.call("getCampaigns");
+
+    const parsedCampigns = campaigns.map((campaign, i) => ({
+      owner: campaign.owner,
+      description: campaign.description,
+      title: campaign.title,
+      target: ethers.utils.formatEther(campaign.target.toString()),
+      deadline: campaign.deadline.toNumber(),
+      amountCollected: ethers.utils.formatEther(
+        campaign.amountCollected.toString()
+      ),
+      image: campaign.image,
+      pId: i,
+    }));
+   // console.log(parsedCampigns);
+    return parsedCampigns;
+  };
+
+  const getUserCampaigns = async () => {
+    const allCampaigns = await getCampaigns();
+
+    const filteredCampigns = allCampaigns.filter((campaign) => campaign.owner === address);
+
+    return filteredCampigns;
+  }
+
   return (
     <StateContext.Provider
       value={{
@@ -59,6 +85,8 @@ export const StateContextProvider = ({ children }) => {
         contract,
         connect,
         createCampaign: publishCampaign,
+        getCampaigns,
+        getUserCampaigns,
       }}
     >
       {children}
