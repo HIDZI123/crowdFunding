@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
-
+import Loader from "../components/Loader";
 import { money } from "../assets";
 import CustomButton from "../components/CustomButton";
 import { checkIfImage } from "../utils";
@@ -51,7 +51,7 @@ const CreateCampaign = () => {
 
   return (
     <div className="bg-[#1c1c24] flex justify-center items-center flex-col sm:p-10 p-4 rounded-xl ">
-      {loading && "loading..."}
+      {loading && <Loader />}
       <div className="p-4 flex justify-center items-center sm:max-w-[380px] rounded-xl bg-[#3a3a43] ">
         <h1 className="font-epilogue font-bold text-white text-[18px] sm:text-[25px] leading-[38px] ">
           Create a Campaign

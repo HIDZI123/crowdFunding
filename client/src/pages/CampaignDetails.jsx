@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
+import Loader from "../components/Loader";
 import { useStateContext } from "../context";
 import CustomButton from "../components/CustomButton";
 import { thirdweb } from "../assets";
@@ -38,7 +39,7 @@ const CampaignDetails = () => {
 
   return (
     <div>
-      {isLoading && "loading..."}
+      {isLoading && <Loader />}
 
       <div className="flex md:flex-row flex-col w-full mt-10 gap-[30px] ">
         <div className="flex-1 flex-col">
