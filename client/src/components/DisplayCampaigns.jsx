@@ -7,8 +7,9 @@ const DisplayCampaigns = ({ title, campaigns, isLoading }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (campaign) => {
-    navigate(`/campaign-details/${campaign.title}`, { state: campaign });
-  };
+    navigate(`/campaign-details/${campaign.title}`, { state: campaign })
+  }
+  
   return (
     <div>
       <h1 className="font-epilogue font-semibold text-[18px] mb-[20px] text-white text-left">
